@@ -1,0 +1,6 @@
+rootProject.name = "MyMovieCompendium"
+include ':app'
+include ':home'
+include ':core'
+include ':data'
+include ':domain'
