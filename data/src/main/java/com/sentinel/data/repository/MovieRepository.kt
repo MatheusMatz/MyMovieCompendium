@@ -1,8 +1,8 @@
 package com.sentinel.data.repository
 
-import com.sentinel.data.entities.MovieResponse
+import com.sentinel.data.datasource.remote.responses.MovieResponse
 
 interface MovieRepository {
 
-    suspend fun fetchDayTrendiesMovies():MovieResponse
+    suspend fun fetchDayTrendiesMovies(): MovieResponse
 }

@@ -1,4 +1,4 @@
-package com.sentinel.data.entities
+package com.sentinel.data.datasource.remote.responses
 
 data class Movie(
     val title: String,

@@ -1,7 +1,7 @@
 package com.sentinel.domain.mappers
 
 import com.sentinel.core.utils.BaseMapper
-import com.sentinel.data.entities.Movie
+import com.sentinel.data.datasource.remote.responses.Movie
 import com.sentinel.domain.dtos.MovieDTO
 
 class MovieMapper: BaseMapper<Movie, MovieDTO>() {

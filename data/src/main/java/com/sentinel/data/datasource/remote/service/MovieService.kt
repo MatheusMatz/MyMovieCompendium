@@ -1,7 +1,6 @@
 package com.sentinel.data.datasource.remote.service
 
-import com.sentinel.core.Resource
-import com.sentinel.data.entities.MovieResponse
+import com.sentinel.data.datasource.remote.responses.MovieResponse
 import retrofit2.http.GET
 
 interface MovieService {
@@ -10,5 +9,5 @@ interface MovieService {
     suspend fun getDayTrendiesMovies(): MovieResponse
 
     @GET("trending/all/week?api_key=")
-    suspend fun getWeekTrendiesMovies(): Resource<MovieResponse>
+    suspend fun getWeekTrendiesMovies(): MovieResponse
 }
