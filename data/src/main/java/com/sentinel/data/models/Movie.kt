@@ -1,6 +1,7 @@
-package com.sentinel.data.datasource.remote.responses
+package com.sentinel.data.models
 
 data class Movie(
+    val id: Int,
     val title: String,
     val original_language: String,
     val original_title: String,
@@ -12,6 +13,6 @@ data class Movie(
     val video: Boolean,
     val adult: Boolean,
     val backdrop_path: String,
-    val id: Int,
-    val popularity: Double
+    val popularity: Double,
+    val isTrendy: Boolean
 )

@@ -1,6 +1,5 @@
 package com.sentinel.domain.usecases
 
-import android.util.Log
 import com.sentinel.data.repository.MovieRepository
 import com.sentinel.domain.dtos.MovieDTO
 import com.sentinel.domain.mappers.MovieMapper
@@ -14,8 +13,6 @@ class MovieUseCaseImpl @Inject constructor (
     override suspend fun loadTrendiesMovies(): List<MovieDTO> {
 
         val response = movieRepository.fetchDayTrendiesMovies()
-
-        Log.d("gustavo", response.toString())
-        return movieMapper.transform(response?.results)
+        return movieMapper.transform(response)
     }
 }

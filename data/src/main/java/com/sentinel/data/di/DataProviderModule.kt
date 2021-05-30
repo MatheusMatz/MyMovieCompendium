@@ -5,7 +5,10 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sentinel.data.datasource.local.MovieCompendiumDatabase
 import com.sentinel.data.datasource.local.dao.MovieDao
+import com.sentinel.data.datasource.remote.datasources.MovieRemoteDataSource
 import com.sentinel.data.datasource.remote.service.MovieService
+import com.sentinel.data.mappers.MovieEntityMapper
+import com.sentinel.data.mappers.MovieMapper
 import com.sentinel.data.repository.MovieRepository
 import com.sentinel.data.repository.MovieRepositoryImpl
 import dagger.Binds
@@ -32,6 +35,16 @@ object DataProviderModule {
     @Provides
     fun provideMovieService(retrofit: Retrofit): MovieService =
         retrofit.create(MovieService::class.java)
+
+    @Provides
+    fun provideRemoteDataSource(movieService: MovieService): MovieRemoteDataSource =
+        MovieRemoteDataSource(movieService)
+
+    @Provides
+    fun provideMovieEntityMapper(): MovieEntityMapper = MovieEntityMapper()
+
+    @Provides
+    fun provideMovieMapper(): MovieMapper = MovieMapper()
 
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
