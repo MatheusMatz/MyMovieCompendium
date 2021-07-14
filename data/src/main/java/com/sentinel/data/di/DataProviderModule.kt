@@ -6,12 +6,9 @@ import com.google.gson.GsonBuilder
 import com.sentinel.data.datasource.local.MovieCompendiumDatabase
 import com.sentinel.data.datasource.local.dao.MovieDao
 import com.sentinel.data.datasource.remote.datasources.MovieRemoteDataSource
-import com.sentinel.data.datasource.remote.service.MovieService
+import com.sentinel.data.datasource.remote.service.TrendyService
 import com.sentinel.data.mappers.MovieEntityMapper
 import com.sentinel.data.mappers.MovieMapper
-import com.sentinel.data.repository.MovieRepository
-import com.sentinel.data.repository.MovieRepositoryImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,11 +30,11 @@ object DataProviderModule {
             .build()
 
     @Provides
-    fun provideMovieService(retrofit: Retrofit): MovieService =
-        retrofit.create(MovieService::class.java)
+    fun provideTrendyService(retrofit: Retrofit): TrendyService =
+        retrofit.create(TrendyService::class.java)
 
     @Provides
-    fun provideRemoteDataSource(movieService: MovieService): MovieRemoteDataSource =
+    fun provideRemoteDataSource(movieService: TrendyService): MovieRemoteDataSource =
         MovieRemoteDataSource(movieService)
 
     @Provides
