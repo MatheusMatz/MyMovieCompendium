@@ -6,9 +6,9 @@ import retrofit2.http.GET
 
 interface TrendyService {
 
-    @GET("trending/all/day?api_key=3c46535b05afcf2269dd861105b19684")
+    @GET("trending/all/day?api_key=")
     suspend fun getDayTrendiesMovies(): Response<MovieListResponse>
 
-    @GET("trending/all/week?api_key=3c46535b05afcf2269dd861105b19684")
+    @GET("trending/all/week?api_key=")
     suspend fun getWeekTrendiesMovies(): Response<MovieListResponse>
 }
