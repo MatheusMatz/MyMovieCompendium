@@ -38,6 +38,8 @@ dependencies {
     api "androidx.core:core-ktx:$core_version"
     api "androidx.appcompat:appcompat:$appcompat_version"
 
+    implementation "com.google.android.material:material:$material_version"
+
     implementation "io.coil-kt:coil:$coil_version"
 
     testImplementation "junit:junit:$junit_version"

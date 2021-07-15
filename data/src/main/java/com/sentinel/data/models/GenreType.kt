@@ -1,0 +1,32 @@
+package com.sentinel.data.models
+
+enum class GenreType(val genre: String) {
+
+    ACTION("Action"),
+    ADVENTURE("Adventure"),
+    ANIMATION("Animation"),
+    COMEDY("Comedy"),
+    CRIME("Crime"),
+    DOCUMENTARY("Documentary"),
+    DRAMA("Drama"),
+    FAMILY("Family"),
+    FANTASY("Fantasy"),
+    HISTORY("History"),
+    HORROR("Horror"),
+    MUSIC("Music"),
+    MYSTERY("Mystery"),
+    ROMANCE("Romance"),
+    SCIENCE_FICTION("Science Fiction"),
+    TV_MOVIE("TV Movie"),
+    THRILLER("Thriller"),
+    WAR("War"),
+    WESTERN("Western"),
+    ACTION_ADVENTURE("Action & Adventure"),
+    KIDS("Kids"),
+    NEWS("News"),
+    REALITY("Reality"),
+    SCI_FI_FANTASY("Sci-Fi & Fantasy"),
+    SOAP("Soap"),
+    TALK("Talk"),
+    WAR_POLITICS("War & Politics"),
+}
