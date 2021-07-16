@@ -33,4 +33,10 @@ class MovieRepositoryImpl @Inject constructor(
             trendiesMovies
         }
     }
+
+    override suspend fun fetchPopularMovies(): List<Movie> {
+
+        val fetchMoviesPopular = movieRemoteDataSource.fetchMoviesPopular()
+        movieMapper.transform(fetchMoviesPopular)
+    }
 }

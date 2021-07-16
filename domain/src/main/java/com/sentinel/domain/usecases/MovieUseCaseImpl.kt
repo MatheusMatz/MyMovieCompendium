@@ -15,4 +15,8 @@ class MovieUseCaseImpl @Inject constructor (
         val response = movieRepository.fetchDayTrendiesMovies()
         return movieMapper.transform(response)
     }
+
+    override suspend fun loadPopularMovies(): List<MovieDTO> {
+        TODO("Not yet implemented")
+    }
 }

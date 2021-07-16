@@ -1,4 +1,4 @@
-package com.sentinel.home
+package com.sentinel.home.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

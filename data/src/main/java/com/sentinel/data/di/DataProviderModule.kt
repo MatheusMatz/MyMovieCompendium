@@ -30,10 +30,6 @@ object DataProviderModule {
             .build()
 
     @Provides
-    fun provideTrendyService(retrofit: Retrofit): TrendyService =
-        retrofit.create(TrendyService::class.java)
-
-    @Provides
     fun provideRemoteDataSource(movieService: TrendyService): MovieRemoteDataSource =
         MovieRemoteDataSource(movieService)
 

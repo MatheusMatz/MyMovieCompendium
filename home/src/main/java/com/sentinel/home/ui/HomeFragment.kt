@@ -1,4 +1,4 @@
-package com.sentinel.home
+package com.sentinel.home.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sentinel.home.databinding.FragmentHomeBinding
+import com.sentinel.home.ui.adapter.PopularMovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -32,8 +33,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel.loadHome()
 
+        val adapter = PopularMovieAdapter()
+
+        binding.movieList.root.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.movieList.root.adapter = adapter
+
         homeViewModel.trendiesMovies.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+            adapter.setMovieList(it)
         })
     }
 }
