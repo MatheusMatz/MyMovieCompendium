@@ -2,6 +2,7 @@ package com.sentinel.data.datasource.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sentinel.data.models.Popularity
 
 @Entity(tableName = "movies")
 data class MovieEntity(
@@ -21,5 +22,5 @@ data class MovieEntity(
     val adult: Boolean,
     val backdrop_path: String,
     val popularity: Double,
-    val isTrendy: Boolean = false
+    val isTrendy: Boolean
 )

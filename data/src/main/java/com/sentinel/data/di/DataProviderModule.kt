@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import com.sentinel.data.datasource.local.MovieCompendiumDatabase
 import com.sentinel.data.datasource.local.dao.MovieDao
 import com.sentinel.data.datasource.remote.datasources.MovieRemoteDataSource
+import com.sentinel.data.datasource.remote.service.GenreService
+import com.sentinel.data.datasource.remote.service.MovieService
 import com.sentinel.data.datasource.remote.service.TrendyService
 import com.sentinel.data.mappers.MovieEntityMapper
 import com.sentinel.data.mappers.MovieMapper
@@ -30,8 +32,12 @@ object DataProviderModule {
             .build()
 
     @Provides
-    fun provideRemoteDataSource(movieService: TrendyService): MovieRemoteDataSource =
-        MovieRemoteDataSource(movieService)
+    fun provideRemoteDataSource(
+        movieService: MovieService,
+        trendyService: TrendyService,
+        genreService: GenreService
+    ): MovieRemoteDataSource =
+        MovieRemoteDataSource(movieService, trendyService, genreService)
 
     @Provides
     fun provideMovieEntityMapper(): MovieEntityMapper = MovieEntityMapper()

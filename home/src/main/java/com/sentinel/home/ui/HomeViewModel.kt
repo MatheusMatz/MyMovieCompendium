@@ -1,5 +1,6 @@
 package com.sentinel.home.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,9 @@ class HomeViewModel @Inject constructor(private val movieUseCaseImpl: MovieUseCa
     val trendiesMovies: LiveData<List<MovieDTO>> get() = _trendiesMovies
 
     fun loadHome() = viewModelScope.launch {
-        val movies = movieUseCaseImpl.loadTrendiesMovies()
-        _trendiesMovies.value = movies
+
+        val trendiesMovies = movieUseCaseImpl.loadTrendiesMovies()
+        val movies = movieUseCaseImpl.loadPopularMovies()
+        _trendiesMovies.value = trendiesMovies
     }
 }

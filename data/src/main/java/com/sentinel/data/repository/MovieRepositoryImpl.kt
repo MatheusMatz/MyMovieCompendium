@@ -1,7 +1,8 @@
 package com.sentinel.data.repository
 
+import android.util.Log
 import com.sentinel.data.datasource.local.dao.MovieDao
-import com.sentinel.data.datasource.performGetOperation
+import com.sentinel.data.datasource.local.entities.MovieEntity
 import com.sentinel.data.datasource.remote.datasources.MovieRemoteDataSource
 import com.sentinel.data.mappers.MovieEntityMapper
 import com.sentinel.data.mappers.MovieMapper
@@ -15,28 +16,46 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieMapper: MovieMapper,
 ) : MovieRepository {
 
-    private var trendiesMovies: List<Movie> = listOf()
-
     override suspend fun fetchDayTrendiesMovies(): List<Movie> {
 
         val movies = movieDao.getTrendiesMovies(true)
 
-        return if (!trendiesMovies.isNullOrEmpty()) {
-            trendiesMovies = movieMapper.transform(movies)
-            trendiesMovies
+        return if (!movies.isNullOrEmpty()) {
+            val movieMapped = movieMapper.transform(movies)
+            movieMapped
         } else {
+
             val fetchTrendiesMovies = movieRemoteDataSource.fetchTrendiesMovies()
-            val transform = movieEntityMapper.transform(fetchTrendiesMovies.data?.results)
-            movieDao.insertMovies(transform)
+
+            movieEntityMapper.checkIsTrendy(true)
+
+            val movieMapped = movieEntityMapper.transform(fetchTrendiesMovies.data?.results)
+
+            movieDao.insertTrendyMovies(movieMapped)
+
             val moviesSaved = movieDao.getTrendiesMovies(true)
-            trendiesMovies = movieMapper.transform(moviesSaved)
-            trendiesMovies
+            val moviesTransformed = movieMapper.transform(moviesSaved)
+            moviesTransformed
         }
     }
 
     override suspend fun fetchPopularMovies(): List<Movie> {
 
-        val fetchMoviesPopular = movieRemoteDataSource.fetchMoviesPopular()
-        movieMapper.transform(fetchMoviesPopular)
+        val movies = movieDao.getMovies()
+
+        return if (!movies.isNullOrEmpty() && movies.any { !it.isTrendy }) {
+            val movieMapped = movieMapper.transform(movies)
+            movieMapped
+        } else {
+
+            val fetchMoviesPopular = movieRemoteDataSource.fetchMoviesPopular()
+            val movieMapped = movieEntityMapper.transform(fetchMoviesPopular.data?.results)
+
+            movieDao.insertMovies(movieMapped)
+
+            val moviesSaved = movieDao.getMovies()
+            val moviesTransformed = movieMapper.transform(moviesSaved)
+            moviesTransformed
+        }
     }
 }
