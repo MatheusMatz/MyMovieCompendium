@@ -11,6 +11,7 @@ class MovieMapper: BaseMapper<Movie, MovieDTO>() {
         return MovieDTO(
             title = entity.title,
             poster_path = entity.poster_path,
+            backdrop_path = entity.backdrop_path,
             vote_count = entity.vote_count,
             overview = entity.overview,
             release_date = entity.release_date,

@@ -9,7 +9,7 @@ import com.sentinel.domain.dtos.MovieDTO
 import com.sentinel.home.databinding.ViewHolderMoviePreviewBinding
 import com.sentinel.home.ui.viewHolder.PreviewMovieViewHolder
 
-class PopularMovieAdapter : RecyclerView.Adapter<PreviewMovieViewHolder>() {
+class PopularAdapter : RecyclerView.Adapter<PreviewMovieViewHolder>() {
 
     private var movieList = mutableListOf<MovieDTO>()
 
