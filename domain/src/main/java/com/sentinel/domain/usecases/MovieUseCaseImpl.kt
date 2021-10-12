@@ -13,7 +13,9 @@ class MovieUseCaseImpl @Inject constructor(
 
     override suspend fun loadTrendiesMovies(): List<MovieDTO> {
         val response = movieRepository.fetchDayTrendiesMovies()
-        return movieMapper.transform(response)
+        return movieMapper.transform(response).sortedBy {
+            it.vote_average
+        }
     }
 
     override suspend fun loadPopularMovies(): List<MovieDTO> {

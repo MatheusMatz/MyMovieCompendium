@@ -1,36 +1,39 @@
 package com.sentinel.home.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
-import androidx.viewpager2.widget.ViewPager2
-import com.sentinel.home.R
+import com.google.android.material.tabs.TabLayoutMediator
 import com.sentinel.home.databinding.FragmentHomeBinding
+import com.sentinel.home.databinding.PagerHighlightBinding
+import com.sentinel.home.ui.adapter.PopularAdapter
 import com.sentinel.home.ui.adapter.TrendyAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private val adapter = TrendyAdapter()
+    private val trendyAdapter = TrendyAdapter()
+    private val popularAdapter = PopularAdapter()
 
-    private val binding by lazy {
-        FragmentHomeBinding.inflate(layoutInflater)
-    }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -38,27 +41,49 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            homeTrendyPage.trendyViewPager.adapter = adapter
-
-            val compositePageTransformer = CompositePageTransformer();
-            compositePageTransformer.addTransformer(MarginPageTransformer(40));
-            compositePageTransformer.addTransformer { page, position ->
-                val r = (1 - kotlin.math.abs(position))
-                page.scaleY = 0.85f + r * 0.15f
-            }
-
-            homeTrendyPage.trendyViewPager.setPageTransformer(compositePageTransformer)
-
-            homeTrendyPage.trendyViewPager.clipToPadding = false;
-            homeTrendyPage.trendyViewPager.clipChildren = false;
-            homeTrendyPage.trendyViewPager.offscreenPageLimit = 3;
-            homeTrendyPage.trendyViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
+            highlightListSetup(binding.homeTrendyPage)
         }
 
         homeViewModel.loadHome()
 
         homeViewModel.trendiesMovies.observe(viewLifecycleOwner, {
-            adapter.addTrendyMovies(it)
+            trendyAdapter.addTrendyMovies(it)
         })
+
+        homeViewModel.popularMoviesMovies.observe(viewLifecycleOwner, {
+            popularAdapter.setMovieList(it)
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    private fun highlightListSetup(pagerHighlightBinding: PagerHighlightBinding) {
+        val trendyViewPager = pagerHighlightBinding.trendyViewPager
+
+        val trendyTabs = pagerHighlightBinding.trendyTabs
+
+        trendyViewPager.adapter = trendyAdapter
+
+        TabLayoutMediator(trendyTabs, trendyViewPager) { _, _ ->
+        }.attach()
+
+
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(MarginPageTransformer(40))
+        compositePageTransformer.addTransformer { page, position ->
+            val r = (1 - abs(position))
+            page.scaleY = 0.85f + r * 0.15f
+        }
+
+        trendyViewPager.setPageTransformer(compositePageTransformer)
+
+        trendyViewPager.clipToPadding = false
+        trendyViewPager.clipChildren = false
+        trendyViewPager.offscreenPageLimit = 3
+        trendyViewPager.getChildAt(0).overScrollMode =
+            RecyclerView.OVER_SCROLL_NEVER
     }
 }

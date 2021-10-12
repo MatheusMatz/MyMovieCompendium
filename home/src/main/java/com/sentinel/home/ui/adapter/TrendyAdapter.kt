@@ -27,7 +27,7 @@ class TrendyAdapter :  RecyclerView.Adapter<TrendyViewHolder>() {
     @SuppressLint("NotifyDataSetChanged")
     fun addTrendyMovies(movieList: List<MovieDTO>) {
         trendyMovieList.clear()
-        trendyMovieList.addAll(movieList)
+        trendyMovieList.addAll(movieList.take(5))
         notifyDataSetChanged()
     }
 }

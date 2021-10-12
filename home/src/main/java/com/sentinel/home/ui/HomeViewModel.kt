@@ -16,10 +16,14 @@ class HomeViewModel @Inject constructor(private val movieUseCaseImpl: MovieUseCa
     private var _trendiesMovies = MutableLiveData<List<MovieDTO>>()
     val trendiesMovies: LiveData<List<MovieDTO>> get() = _trendiesMovies
 
+    private var _popularMovies = MutableLiveData<List<MovieDTO>>()
+    val popularMoviesMovies: LiveData<List<MovieDTO>> get() = _trendiesMovies
+
     fun loadHome() = viewModelScope.launch {
 
         val trendiesMovies = movieUseCaseImpl.loadTrendiesMovies()
         val movies = movieUseCaseImpl.loadPopularMovies()
         _trendiesMovies.value = trendiesMovies
+        _popularMovies.value = movies
     }
 }
