@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.forfun.category.presenter.GenreAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sentinel.home.databinding.FragmentHomeBinding
 import com.sentinel.home.databinding.PagerHighlightBinding
@@ -22,8 +25,18 @@ import kotlin.math.abs
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private val trendyAdapter = TrendyAdapter()
-    private val popularAdapter = PopularAdapter()
+
+    private val trendyAdapter by lazy {
+        TrendyAdapter()
+    }
+
+    private val popularAdapter by lazy {
+        PopularAdapter()
+    }
+
+    private val genreAdapter by lazy {
+        GenreAdapter()
+    }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -40,8 +53,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            highlightListSetup(binding.homeTrendyPage)
+        val concatAdapter = ConcatAdapter(trendyAdapter, popularAdapter, genreAdapter)
+
+        with(binding.root) {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = concatAdapter
         }
 
         homeViewModel.loadHome()
@@ -52,6 +69,10 @@ class HomeFragment : Fragment() {
 
         homeViewModel.popularMoviesMovies.observe(viewLifecycleOwner, {
             popularAdapter.setMovieList(it)
+        })
+
+        homeViewModel.genreMovieLiveData.observe(viewLifecycleOwner, {
+            genreAdapter.submitList(it)
         })
     }
 

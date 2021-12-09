@@ -3,6 +3,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="4dp"
     app:cardCornerRadius="4dp"
     android:layout_height="wrap_content"
@@ -14,9 +15,10 @@
         android:layout_margin="8dp">
 
         <TextView
+            android:id="@+id/genreName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teste"
+            tools:text="Teste"
             android:textColor="@color/iceGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
