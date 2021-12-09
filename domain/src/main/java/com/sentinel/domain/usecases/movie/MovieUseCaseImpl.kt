@@ -1,15 +1,14 @@
-package com.sentinel.domain.usecases
+package com.sentinel.domain.usecases.movie
 
-import com.sentinel.data.repository.MovieRepository
+import com.sentinel.data.repository.movie.IMovieRepository
 import com.sentinel.domain.dtos.MovieDTO
 import com.sentinel.domain.mappers.MovieMapper
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 class MovieUseCaseImpl @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val movieRepository: IMovieRepository,
     private val movieMapper: MovieMapper
-) : MovieUseCase {
+) : IMovieUseCase {
 
     override suspend fun loadTrendiesMovies(): List<MovieDTO> {
         val response = movieRepository.fetchDayTrendiesMovies()

@@ -5,13 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sentinel.domain.dtos.MovieDTO
-import com.sentinel.domain.usecases.MovieUseCase
+import com.sentinel.domain.usecases.genre.GenreUseCaseImpl
+import com.sentinel.domain.usecases.genre.IGenreUseCase
+import com.sentinel.domain.usecases.movie.IMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val movieUseCaseImpl: MovieUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val movieUseCase: IMovieUseCase,
+    private val genreUseCase: IGenreUseCase
+) : ViewModel() {
 
     private var _trendiesMovies = MutableLiveData<List<MovieDTO>>()
     val trendiesMovies: LiveData<List<MovieDTO>> get() = _trendiesMovies
@@ -21,9 +26,7 @@ class HomeViewModel @Inject constructor(private val movieUseCaseImpl: MovieUseCa
 
     fun loadHome() = viewModelScope.launch {
 
-        val trendiesMovies = movieUseCaseImpl.loadTrendiesMovies()
-        val movies = movieUseCaseImpl.loadPopularMovies()
-        _trendiesMovies.value = trendiesMovies
-        _popularMovies.value = movies
+        val genres = genreUseCase.fetchMoviesCategories()
+
     }
 }

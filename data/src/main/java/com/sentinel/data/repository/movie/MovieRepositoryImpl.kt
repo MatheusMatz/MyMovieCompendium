@@ -1,8 +1,6 @@
-package com.sentinel.data.repository
+package com.sentinel.data.repository.movie
 
-import android.util.Log
 import com.sentinel.data.datasource.local.dao.MovieDao
-import com.sentinel.data.datasource.local.entities.MovieEntity
 import com.sentinel.data.datasource.remote.datasources.MovieRemoteDataSource
 import com.sentinel.data.mappers.MovieEntityMapper
 import com.sentinel.data.mappers.MovieMapper
@@ -14,7 +12,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDao: MovieDao,
     private val movieEntityMapper: MovieEntityMapper,
     private val movieMapper: MovieMapper,
-) : MovieRepository {
+) : IMovieRepository {
 
     override suspend fun fetchDayTrendiesMovies(): List<Movie> {
 

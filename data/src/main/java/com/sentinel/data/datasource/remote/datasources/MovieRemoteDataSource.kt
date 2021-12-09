@@ -9,7 +9,6 @@ import javax.inject.Inject
 class MovieRemoteDataSource @Inject constructor(
     private val movieService: MovieService,
     private val trendyService: TrendyService,
-    private val genreService: GenreService
 ) : BaseDataSource() {
 
     suspend fun fetchMovieDetail(movieId: Long) =
@@ -62,10 +61,4 @@ class MovieRemoteDataSource @Inject constructor(
 
     suspend fun fetchTrendiesMovies() =
         getResult { trendyService.getDayTrendiesMovies() }
-
-    suspend fun fetchMovieGenre() =
-        getResult { genreService.getMovieGenres() }
-
-    suspend fun fetchTVGenre() =
-        getResult { genreService.getTVGenres() }
 }

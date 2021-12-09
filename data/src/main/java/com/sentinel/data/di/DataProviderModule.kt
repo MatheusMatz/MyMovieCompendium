@@ -4,11 +4,15 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sentinel.data.datasource.local.MovieCompendiumDatabase
+import com.sentinel.data.datasource.local.dao.GenreDao
 import com.sentinel.data.datasource.local.dao.MovieDao
+import com.sentinel.data.datasource.remote.datasources.GenreRemoteDataSource
 import com.sentinel.data.datasource.remote.datasources.MovieRemoteDataSource
 import com.sentinel.data.datasource.remote.service.GenreService
 import com.sentinel.data.datasource.remote.service.MovieService
 import com.sentinel.data.datasource.remote.service.TrendyService
+import com.sentinel.data.mappers.GenreEntityMapper
+import com.sentinel.data.mappers.GenreMapper
 import com.sentinel.data.mappers.MovieEntityMapper
 import com.sentinel.data.mappers.MovieMapper
 import dagger.Module
@@ -32,18 +36,27 @@ object DataProviderModule {
             .build()
 
     @Provides
-    fun provideRemoteDataSource(
+    fun provideMovieRemoteDataSource(
         movieService: MovieService,
-        trendyService: TrendyService,
-        genreService: GenreService
+        trendyService: TrendyService
     ): MovieRemoteDataSource =
-        MovieRemoteDataSource(movieService, trendyService, genreService)
+        MovieRemoteDataSource(movieService, trendyService)
+
+    @Provides
+    fun providesGenreRemoteDataSource(genreService: GenreService): GenreRemoteDataSource =
+        GenreRemoteDataSource(genreService)
 
     @Provides
     fun provideMovieEntityMapper(): MovieEntityMapper = MovieEntityMapper()
 
     @Provides
     fun provideMovieMapper(): MovieMapper = MovieMapper()
+
+    @Provides
+    fun providesGenreEntityMapper(): GenreEntityMapper = GenreEntityMapper()
+
+    @Provides
+    fun providesGenreMapper(): GenreMapper = GenreMapper()
 
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
@@ -56,6 +69,10 @@ object DataProviderModule {
     @Provides
     @Singleton
     fun provideMovieDao(db: MovieCompendiumDatabase): MovieDao = db.movieDao()
+
+    @Provides
+    @Singleton
+    fun provideGenreDao(db: MovieCompendiumDatabase): GenreDao = db.genreDao()
 
     private const val BASE_URL = "https://api.themoviedb.org/3/"
 }

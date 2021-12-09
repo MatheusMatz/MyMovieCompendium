@@ -1,8 +1,8 @@
-package com.sentinel.domain.usecases
+package com.sentinel.domain.usecases.movie
 
 import com.sentinel.domain.dtos.MovieDTO
 
-interface MovieUseCase {
+interface IMovieUseCase {
 
     suspend fun loadTrendiesMovies(): List<MovieDTO>
     suspend fun loadPopularMovies(): List<MovieDTO>

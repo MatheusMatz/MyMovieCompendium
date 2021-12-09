@@ -1,5 +1,6 @@
 package com.sentinel.domain.di
 
+import com.sentinel.domain.mappers.GenreMapper
 import com.sentinel.domain.mappers.MovieMapper
 import dagger.Module
 import dagger.Provides
@@ -11,7 +12,8 @@ import dagger.hilt.components.SingletonComponent
 class DomainProviderModule {
 
     @Provides
-    fun provideMovieMapper(): MovieMapper {
-        return MovieMapper()
-    }
+    fun provideMovieMapper() = MovieMapper()
+
+    @Provides
+    fun providesGenreMapper() = GenreMapper()
 }

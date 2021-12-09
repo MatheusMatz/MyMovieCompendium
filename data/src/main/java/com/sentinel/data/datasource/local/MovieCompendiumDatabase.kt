@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.sentinel.data.datasource.local.dao.GenreDao
 import com.sentinel.data.datasource.local.dao.MovieDao
+import com.sentinel.data.datasource.local.entities.GenreEntity
 import com.sentinel.data.datasource.local.entities.MovieEntity
 
-@Database(entities = [MovieEntity::class], version = 1, exportSchema = false)
+@Database(entities = [MovieEntity::class, GenreEntity::class], version = 1, exportSchema = false)
 abstract class MovieCompendiumDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
+    abstract fun genreDao(): GenreDao
 
     companion object {
 
